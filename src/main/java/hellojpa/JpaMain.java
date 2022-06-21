@@ -18,27 +18,23 @@ public class JpaMain {
         tx.begin();
 
         try {
+            // 비영속
             Member member = new Member();
-            member.setId(1L);
-            member.setName("HelloA");
-            em.persist(member);
+            member.setId(101L);
+            member.setName("HelloJPA");
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                                .setFirstResult(0)
-                                .setMaxResults(100)
-                                .getResultList();
+            //영속
+//            System.out.println("===before===");
+//            em.persist(member); // 1차 캐시에 저장.
+//            System.out.println("===after===");
 
-            System.out.println(result);
+//            Member findMember = em.find(Member.class, 101L); // 1차 캐시에 있는걸 조회.
 
-            //
-            for (Member m1: result) {
-                System.out.println("member = " + m1.getName());
-            }
-//
-//            Member findMember = em.find(Member.class, 1L);
-//
-//            findMember.setName("memberJPA");
-//
+            Member findMember1 = em.find(Member.class, 101L); // DB에서 조회
+            Member findMember2 = em.find(Member.class, 101L); // 1차 캐시에 있는걸 조회.
+
+
+            System.out.println("result = "+(findMember1 == findMember2));
 //            System.out.println("findMember.getId() = " + findMember.getId());
 //            System.out.println("findMember.getName() = " + findMember.getName());
 
