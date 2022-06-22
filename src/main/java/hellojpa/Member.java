@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity//JPA가 관리하는 객체.
 @SequenceGenerator(//테이블마다 시퀀스 따로 관리
         name="MEMBER_SEQ_GENERATOR",
         sequenceName = "MEMBER_SEQ", //매핑할 데이터베이스 시퀀스 이름
@@ -19,23 +18,25 @@ import java.util.Date;
 //        name="MEMBER_SEQ_GENERATOR",
 //        table="MY_SEQUENCES",
 //        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
+@Entity//JPA가 관리하는 객체.
 public class Member {
 
-    @Id //pk
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
-    private Long id; //int는 10억이 넘어가면 다시 0부터 시작됨 id 같은건 그냥 Long쓰는게 나음
-    //IDENTITY : 기본키 생성을 DB에 위임. flush되는 sql을 보면 id 값이 null이다
 
+    @Id
+    @GeneratedValue
+    @Column(name = "MEMBER_ID")
+    private Long id;
 
-    @Column(name = "name", nullable = false)//테이블 칼럼명
+    @Column(name = "USERNAME")
     private String username;
 
-    public Member() {
-    }
 
-    public String getUsername() {
-        return username;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="TEAM_ID")
+    private Team team;
+
+//    @Column(name="TEAM_ID")
+//    private Long teamId;
 
     public Long getId() {
         return id;
@@ -45,7 +46,57 @@ public class Member {
         this.id = id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+//        team.getMembers().add(this);//**
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", team=" + team +
+                '}';
+    }
+
+    //    @Id //pk
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+//    private Long id; //int는 10억이 넘어가면 다시 0부터 시작됨 id 같은건 그냥 Long쓰는게 나음
+//    //IDENTITY : 기본키 생성을 DB에 위임. flush되는 sql을 보면 id 값이 null이다
+//
+//
+//    @Column(name = "name", nullable = false)//테이블 칼럼명
+//    private String username;
+//
+//    public Member() {
+//    }
+//
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
 }
