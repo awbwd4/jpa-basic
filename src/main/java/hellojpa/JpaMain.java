@@ -53,7 +53,7 @@ public class JpaMain {
                 System.out.println("List<Member>에 암것도 없음!!");
             }
 
-            System.out.println("findTeam = " + findTeam);
+//            System.out.println("findTeam = " + findTeam);
             
             System.out.println("==========================");
 
