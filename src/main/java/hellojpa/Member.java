@@ -58,19 +58,19 @@ public class Member {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void addTeam(Team team) {
         this.team = team;
-//        team.getMembers().add(this);//**
+        team.getMembers().add(this);//**
     }
 
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", team=" + team +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Member{" +
+//                "id=" + id +
+//                ", username='" + username + '\'' +
+//                ", team=" + team +
+//                '}';
+//    }
 
     //    @Id //pk
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")

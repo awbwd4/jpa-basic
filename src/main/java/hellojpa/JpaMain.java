@@ -21,7 +21,7 @@ public class JpaMain {
             // 저장
             Team team = new Team();
             team.setName("TeamA");
-//            team.getMembers().add(member);
+//            team.getMembers().add(member); //mappedby로 되어있는 가짜 매핑 : 읽기 전용이라 쓰기는 안된다.
             em.persist(team);
 
 
@@ -29,8 +29,9 @@ public class JpaMain {
             member.setUsername("member1");
 //            member.setTeamId(team.getId());
 //            member.changeTeam(team);//****
+//            team.addMember(member);
+            member.addTeam(team);
 
-            team.addMember(member);
 
             em.persist(member);
 
@@ -54,7 +55,7 @@ public class JpaMain {
             }
 
 //            System.out.println("findTeam = " + findTeam);
-            
+
             System.out.println("==========================");
 
 //
