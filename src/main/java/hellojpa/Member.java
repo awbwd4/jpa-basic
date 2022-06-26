@@ -33,24 +33,24 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="TEAM_ID")
     private Team team;
 
     //    @Column(name="TEAM_ID")
 //    private Long teamId;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
-    // Member가 주인인 1:1 관계. 실제 테이블에도 Member가 fk를 가지고 있음.
-
-//    @ManyToMany
-//    @JoinTable(name="MEMBER_PRODUCT")
-//    private List<Product> products = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member")
-    private List<MemberProduct> memberProducts = new ArrayList<>();
+//    @OneToOne
+//    @JoinColumn(name = "LOCKER_ID")
+//    private Locker locker;
+//    // Member가 주인인 1:1 관계. 실제 테이블에도 Member가 fk를 가지고 있음.
+//
+////    @ManyToMany
+////    @JoinTable(name="MEMBER_PRODUCT")
+////    private List<Product> products = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member")
+//    private List<MemberProduct> memberProducts = new ArrayList<>();
 
 
 
