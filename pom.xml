@@ -26,7 +26,6 @@
         <version>2.3.0</version>
     </dependency>
 
-
 </dependencies>
 <properties>
     <maven.compiler.source>11</maven.compiler.source>

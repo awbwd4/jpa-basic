@@ -21,8 +21,7 @@ import java.util.List;
 //        table="MY_SEQUENCES",
 //        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 @Entity//JPA가 관리하는 객체.
-public class Member {
-
+public class Member extends BaseEntity{
 
     /**fields**/
 
@@ -55,10 +54,7 @@ public class Member {
 
 
 
-
     /**getter setter**/
-
-
     public Long getId() {
         return id;
     }
