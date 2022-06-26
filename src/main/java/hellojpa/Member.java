@@ -3,7 +3,9 @@ package hellojpa;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SequenceGenerator(//테이블마다 시퀀스 따로 관리
         name="MEMBER_SEQ_GENERATOR",
@@ -22,6 +24,8 @@ import java.util.Date;
 public class Member {
 
 
+    /**fields**/
+
     @Id
     @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -30,13 +34,30 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="TEAM_ID")
     private Team team;
 
-//    @Column(name="TEAM_ID")
+    //    @Column(name="TEAM_ID")
 //    private Long teamId;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
+    // Member가 주인인 1:1 관계. 실제 테이블에도 Member가 fk를 가지고 있음.
+
+//    @ManyToMany
+//    @JoinTable(name="MEMBER_PRODUCT")
+//    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
+
+
+
+
+    /**getter setter**/
+
 
     public Long getId() {
         return id;

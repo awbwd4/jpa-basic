@@ -14,12 +14,20 @@ public class Team {
 
     private String name;
 
-    @OneToMany(mappedBy = "team")
-    private List<Member> members
-            = new ArrayList<>();
-    //mappedBy = "team"
-    //          : Member엔티티에 있는 team필드임
+    /**team-member가 일대다 관계인 경우
+     *   @JoinColumn(name = "TEAM_ID")
+     *  @OneToMany
+     * **/
+    @OneToMany(mappedBy = "team") //member-team이 다대일 관계인 경우, team에서 member
+    private List<Member> members = new ArrayList<>();
+    // member-team이 다대일 관계인 경우
+    // 그냥은 이게 필요는 없지만
+    // team에서 member를 읽어야 할 일이 많을 경우 이렇게 해주면 됨.
 
+
+
+    //mappedBy = "team "
+    //          : Member엔티티에 있는 team필드임
 
     public Long getId() {
         return id;
