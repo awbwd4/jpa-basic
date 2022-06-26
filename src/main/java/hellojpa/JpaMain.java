@@ -18,29 +18,45 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team teamA = new Team();
+            teamA.setName("teamA");
+            em.persist(teamA);
 
-            Member member = new Member();
-            member.setUsername("user");
-            em.persist(member);
+            Team teamB = new Team();
+            teamB.setName("teamA");
+            em.persist(teamB);
+
+            Member memberA = new Member();
+            memberA.setUsername("memberA");
+            memberA.addTeam(teamA);
+            em.persist(memberA);
+
+
+            Member memberB = new Member();
+            memberB.setUsername("memberB");
+            memberB.addTeam(teamB);
+            em.persist(memberB);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member.getId());
-            System.out.println("refMember.getClass() = " + refMember.getClass());
-
-//            refMember.getUsername(); //JPA식 강제 초기화,jpa에는 강제 초기화를 위한 특정한 기능이 없음.
-
-            Hibernate.initialize(refMember);//강제초기화
+//            List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
+            
+            //fetch join
+            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class).getResultList();
 
 
-//            em.detach(refMember);
-//            em.close();
-            // 영속성 컨텍스트로 관리가 되지 않으면 프록시 초기화 불가
-
-
-            //프록시 초기화 여부 확인
-//            System.out.println("isLoaded = "+ emf.getPersistenceUnitUtil().isLoaded(refMember));
+            //
+//            Member m = em.find(Member.class, member.getId());
+//            System.out.println("refMember.getClass() = " + m.getClass());
+//            System.out.println("refMember.getTeam().getClass() = " + m.getTeam().getClass());
+//
+//
+//            //실제 team을 사용할때 초기화한다
+//            System.out.println("refMember.getTeam().getName() = " + m.getTeam().getName());
+//
+//            //물론 그래도 한번 프록시면 계속 프록시임ㅇㅇ
+//            System.out.println("refMember.getTeam().getClass() = " + m.getTeam().getClass());
 
 
             tx.commit();

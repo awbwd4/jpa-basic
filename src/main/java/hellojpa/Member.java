@@ -33,7 +33,7 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY) // Member 엔티티 조회시 프록시로 조회됨.
     @JoinColumn(name="TEAM_ID")
     private Team team;
 
