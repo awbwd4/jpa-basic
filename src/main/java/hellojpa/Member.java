@@ -37,22 +37,6 @@ public class Member extends BaseEntity{
     @JoinColumn(name="TEAM_ID")
     private Team team;
 
-    //    @Column(name="TEAM_ID")
-//    private Long teamId;
-
-//    @OneToOne
-//    @JoinColumn(name = "LOCKER_ID")
-//    private Locker locker;
-//    // Member가 주인인 1:1 관계. 실제 테이블에도 Member가 fk를 가지고 있음.
-//
-////    @ManyToMany
-////    @JoinTable(name="MEMBER_PRODUCT")
-////    private List<Product> products = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "member")
-//    private List<MemberProduct> memberProducts = new ArrayList<>();
-
-
 
     /**getter setter**/
     public Long getId() {
@@ -79,41 +63,4 @@ public class Member extends BaseEntity{
         this.team = team;
         team.getMembers().add(this);//**
     }
-
-//    @Override
-//    public String toString() {
-//        return "Member{" +
-//                "id=" + id +
-//                ", username='" + username + '\'' +
-//                ", team=" + team +
-//                '}';
-//    }
-
-    //    @Id //pk
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
-//    private Long id; //int는 10억이 넘어가면 다시 0부터 시작됨 id 같은건 그냥 Long쓰는게 나음
-//    //IDENTITY : 기본키 생성을 DB에 위임. flush되는 sql을 보면 id 값이 null이다
-//
-//
-//    @Column(name = "name", nullable = false)//테이블 칼럼명
-//    private String username;
-//
-//    public Member() {
-//    }
-//
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
 }

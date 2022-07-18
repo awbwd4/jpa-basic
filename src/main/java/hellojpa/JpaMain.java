@@ -18,45 +18,25 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team teamA = new Team();
-            teamA.setName("teamA");
-            em.persist(teamA);
 
-            Team teamB = new Team();
-            teamB.setName("teamA");
-            em.persist(teamB);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Member memberA = new Member();
-            memberA.setUsername("memberA");
-            memberA.addTeam(teamA);
-            em.persist(memberA);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-
-            Member memberB = new Member();
-            memberB.setUsername("memberB");
-            memberB.addTeam(teamB);
-            em.persist(memberB);
+            em.persist(child1);
+            em.persist(child2);
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-//            List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
-            
-            //fetch join
-            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class).getResultList();
+            Parent findParent = em.find(Parent.class, parent.getId());
+//            findParent.getChildren().remove(0);
 
-
-            //
-//            Member m = em.find(Member.class, member.getId());
-//            System.out.println("refMember.getClass() = " + m.getClass());
-//            System.out.println("refMember.getTeam().getClass() = " + m.getTeam().getClass());
-//
-//
-//            //실제 team을 사용할때 초기화한다
-//            System.out.println("refMember.getTeam().getName() = " + m.getTeam().getName());
-//
-//            //물론 그래도 한번 프록시면 계속 프록시임ㅇㅇ
-//            System.out.println("refMember.getTeam().getClass() = " + m.getTeam().getClass());
+            em.remove(findParent);
 
 
             tx.commit();
