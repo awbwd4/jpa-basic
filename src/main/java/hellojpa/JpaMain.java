@@ -19,27 +19,45 @@ public class JpaMain {
 
         try {
 
-            Child child1 = new Child();
-            Child child2 = new Child();
+            Member member = new Member();
+            member.setUsername("hello");
+            member.setHomeAddress(new Address("aaaa", "bbbb", "ccccc"));
+            member.getFavoriteFoods().add("CHIKEN");
+            member.getFavoriteFoods().add("PIZZA");
+            member.getFavoriteFoods().add("JOKBAL");
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
+//            member.getAddressHistory().add(new Address("old1", "street1", "zip1"));
+//            member.getAddressHistory().add(new Address("old2", "street2", "zip2"));
+            member.getAddressEntities().add(new AddressEntity("old1", "street1", "zip1"));
+            member.getAddressEntities().add(new AddressEntity("old2", "street2", "zip2"));
 
-            em.persist(child1);
-            em.persist(child2);
-            em.persist(parent);
+            em.persist(member);
 
             em.flush();
             em.clear();
 
-            Parent findParent = em.find(Parent.class, parent.getId());
-//            findParent.getChildren().remove(0);
-
-            em.remove(findParent);
+            //
 
 
-            tx.commit();
+            Member findMember = em.find(Member.class, member.getId());
+
+
+
+            findMember.setHomeAddress(new Address("new", "new", "new"));
+
+
+            //치킨 -> 한식, String 변경
+            System.out.println("========치킨 -> 한식======");
+            findMember.getFavoriteFoods().remove("CHIKEN");
+            findMember.getFavoriteFoods().add("한식");
+
+
+            // 주소 변경
+//            findMember.getAddressHistory().remove(new Address("old1", "street1", "zip1"));
+//            findMember.getAddressHistory().add(new Address("new", "street1", "zip1"));
+
+
+           tx.commit();
         } catch (Exception e) {
             System.out.println("catch");
             tx.rollback();
